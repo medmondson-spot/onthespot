@@ -77,14 +77,14 @@ def log_function_memory(func):
         total = sum(stat.size for stat in top_stats)
         logger_.debug("Total allocated size: %.1f KiB" % (total / 1024))
 
-    @wraps(func)
+    @wraps(wrap_func)
     def snapshot_function_call(*args, **kwargs):
-        prefix = f"{func.__name__}: "
+        prefix = f"{wrap_func.__name__}: "
         before_func = tracemalloc.take_snapshot()
-        logger_.debug(f"Snapshotting before {func.__name__} call")
-        ret_val = func(*args, **kwargs)
+        logger_.debug(f"Snapshotting before {wrap_func.__name__} call")
+        ret_val = wrap_func(*args, **kwargs)
         display_top(before_func, prefix)
-        logger_.debug(f"Snapshotting after {func.__name__} call")
+        logger_.debug(f"Snapshotting after {wrap_func.__name__} call")
         after_func = tracemalloc.take_snapshot()
         display_top(after_func, prefix)
         top_stats = after_func.compare_to(before_func, 'lineno')
