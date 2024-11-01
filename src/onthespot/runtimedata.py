@@ -79,12 +79,12 @@ def log_function_memory(func):
 
     @wraps(func)
     def snapshot_function_call(*args, **kwargs):
-        prefix = f"FuncMem-{func.__name__}: "
+        prefix = f"{func.__name__}: "
         before_func = tracemalloc.take_snapshot()
         logger_.debug(f"Snapshotting before {func.__name__} call")
         ret_val = func(*args, **kwargs)
         display_top(before_func, prefix)
-        logger_.debug(f"Snapshotting before {func.__name__} call")
+        logger_.debug(f"Snapshotting after {func.__name__} call")
         after_func = tracemalloc.take_snapshot()
         display_top(after_func, prefix)
         top_stats = after_func.compare_to(before_func, 'lineno')
