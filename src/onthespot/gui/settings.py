@@ -23,15 +23,15 @@ def load_config(self):
     self.inp_login_service.insertItem(0, deezer_icon, "")
     #self.btn_login_add_soundcloud.setIcon(soundcloud_icon)
 
-    spotify_icon = QIcon(os.path.join(config.app_root, 'resources', 'icons', 'spotify.png'))
-    self.inp_login_service.insertItem(1, spotify_icon, "")
-    #self.btn_login_add_spotify.setIcon(spotify_icon)
-
-
     soundcloud_icon = QIcon(os.path.join(config.app_root, 'resources', 'icons', 'soundcloud.png'))
-    self.inp_login_service.insertItem(2, soundcloud_icon, "")
+    self.inp_login_service.insertItem(1, soundcloud_icon, "")
     #self.btn_login_add_soundcloud.setIcon(soundcloud_icon)
 
+    spotify_icon = QIcon(os.path.join(config.app_root, 'resources', 'icons', 'spotify.png'))
+    self.inp_login_service.insertItem(2, spotify_icon, "")
+    #self.btn_login_add_spotify.setIcon(spotify_icon)
+
+    self.inp_login_service.setCurrentIndex(2)
 
     save_icon = QIcon(os.path.join(config.app_root, 'resources', 'icons', 'save.png'))
     self.btn_save_config.setIcon(save_icon)
@@ -48,6 +48,7 @@ def load_config(self):
     # Text
     self.inp_language.setCurrentIndex(config.get("language_index"))
     self.inp_explicit_label.setText(config.get("explicit_label"))
+    self.inp_file_bitrate.setText(config.get("file_bitrate"))
     self.inp_download_root.setText(config.get("download_root"))
     self.inp_download_delay.setValue(config.get("download_delay"))
     self.inp_max_search_results.setValue(config.get("max_search_results"))
@@ -124,6 +125,7 @@ def save_config(self):
     config.set_('language_index', self.inp_language.currentIndex())
     config.set_('explicit_label', self.inp_explicit_label.text())
     config.set_('download_root', self.inp_download_root.text())
+    config.set_('file_bitrate', self.inp_file_bitrate.text())
     config.set_('track_path_formatter', self.inp_track_formatter.text())
     config.set_('podcast_path_formatter', self.inp_podcast_path_formatter.text())
     config.set_('playlist_path_formatter', self.inp_playlist_path_formatter.text())
