@@ -17,7 +17,6 @@ from .api.deezer import deezer_get_track_metadata, get_song_infos_from_deezer_we
 from .accounts import get_account_token
 from .utils import sanitize_data, format_track_path
 
-
 logger = get_logger("spotify.downloader")
 
 
@@ -193,6 +192,9 @@ class DownloadWorker(QObject):
                                             self.progress.emit(item, self.tr("Downloading"), int((downloaded / total_size) * 100))
                                     if len(data) == 0:
                                         break
+                            stream.input_stream.stream().close()
+                            stream_internal = stream.input_stream.stream()
+                            del stream_internal, stream.input_stream
                             default_format = ".ogg"
                             bitrate = "320k" if quality == AudioQuality.VERY_HIGH else "160k"
 
