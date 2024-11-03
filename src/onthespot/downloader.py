@@ -189,6 +189,8 @@ class DownloadWorker(QObject):
                                         if self.gui:
                                             self.progress.emit(item, self.tr("Downloading"), int((downloaded / total_size) * 100))
                                     if len(data) == 0:
+                                        # Stream is done so since there is a memory leak in the Librespot python package we'll manually delete
+                                        del stream.input_stream.buffer
                                         break  # Exit if no more data is being read  
                             default_format = ".ogg"
                             bitrate = "320k" if quality == AudioQuality.VERY_HIGH else "160k"
